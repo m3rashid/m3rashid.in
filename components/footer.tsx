@@ -40,18 +40,6 @@ const Footer = () => {
               {defaultAuthor.handle}
             </a>
           </p>
-          <p className="text-sm text-muted-foreground md:text-left">
-            Source code available on{" "}
-            <a
-              href={siteMetadata.siteRepo}
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              GitHub
-            </a>
-            .
-          </p>
         </div>
       </div>
     </footer>

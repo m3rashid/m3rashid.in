@@ -12,11 +12,9 @@ export const size = {
 
 export const contentType = "image/png";
 
-// Image generation
 export default async function Image() {
   return new ImageResponse(
     (
-      // ImageResponse JSX element
       <div
         style={{
           background: "linear-gradient(45deg, rgba(59, 178, 93, 0.20) 0%, rgba(59, 121, 178, 0.20) 100%)",
@@ -70,10 +68,7 @@ export default async function Image() {
         </div>
       </div>
     ),
-    // ImageResponse options
     {
-      // For convenience, we can re-use the exported opengraph-image
-      // size config to also set the ImageResponse's width and height.
       ...size,
     }
   );

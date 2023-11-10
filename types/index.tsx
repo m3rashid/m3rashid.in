@@ -26,23 +26,13 @@ export interface MobileLinkProps extends LinkProps {
   className?: string;
 }
 
-export type AnalyticsProvider = "umami" | "vercel" | "plausible" | "google";
-
-export type NewsletterProvider = "convertkit" | "substack" | "mailerlite";
-
 export type SiteMetaData = {
   title: {
     template: string;
     default: string;
   };
   description: string;
-  siteRepo: string;
-  newsletterProvider?: NewsletterProvider;
-  newsletterUrl?: string;
-  analyticsProvider?: AnalyticsProvider;
   defaultTheme: "light" | "dark" | "system";
-  activeAnnouncement: boolean;
-  announcement: Pick<AnnouncementBarProps, "buttonText" | "link">;
   postsPerPage: number;
   postsOnHomePage: number;
   projectsOnHomePage: number;
@@ -73,8 +63,5 @@ export type AuthorType = {
   jobTitle: string;
   company?: string;
   availableForWork: boolean;
-  location: {
-    city: string;
-    media: string;
-  };
+  location: string;
 };

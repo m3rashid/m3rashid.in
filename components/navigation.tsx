@@ -3,18 +3,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Rocket } from "lucide-react";
 
-import siteMetadata, { defaultAuthor } from "@/lib/metadata";
+import { defaultAuthor } from "@/lib/metadata";
 import { cn, debounce } from "@/lib/utils";
-import { AnnouncementBar } from "@/components/announcement-bar";
 import { CommandDialogComponent } from "@/components/command-dialog";
 import { MobileNav } from "@/components/mobile-nav";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Navbar } from "@/components/navbar";
 import { WorkAvailabilityBadge } from "@/components/work-availability-badge";
-
-const SCROLL_OFFSET = 200;
 
 export function Navigation() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -43,22 +39,10 @@ export function Navigation() {
   }, [prevScrollPos, visible, handleScroll]);
 
   return (
-    <>
-      {siteMetadata?.activeAnnouncement && (
-        <AnnouncementBar
-          buttonText={siteMetadata.announcement.buttonText as string}
-          link={siteMetadata.announcement.link as string}
-        >
-          <Rocket className="mr-2 h-5 w-5" />
-          <strong className="mr-1">Launching on DevHunt!</strong> If you like this template, please support me by
-          upvoting on DevHunt from Aug 21-27.
-        </AnnouncementBar>
-      )}
       <header
         className={cn(
           "fixed inset-x-0 -bottom-32 z-20 mx-auto mb-4 px-4 transition-all duration-1000 animate-out sm:top-0 sm:h-16 sm:px-0 sm:transition-none",
           visible && "bottom-0 animate-in",
-          siteMetadata.activeAnnouncement && "sm:top-28 md:top-20 lg:top-12"
         )}
       >
         {defaultAuthor.availableForWork && (
@@ -77,7 +61,7 @@ export function Navigation() {
                     className="duration-300 group-hover:scale-110"
                     width={40}
                     height={40}
-                    src="/avatar.png"
+                    src="/favicon.ico"
                     alt={defaultAuthor.name}
                   />
                 </Link>
@@ -103,6 +87,5 @@ export function Navigation() {
           </div>
         </div>
       </header>
-    </>
   );
 }

@@ -8,18 +8,15 @@ export const BASE_URL =
   `http://localhost:${process.env.PORT || 3000}`;
 
 export const defaultAuthor: AuthorType = {
-  name: "Amy Shields",
-  handle: "@amyshieldsfake",
+  name: "MD Rashid Hussain",
+  handle: "@m3rashid",
   socialProfiles,
-  email: "definitelyfake@nevermind.com",
-  website: "https://nextjs.org",
-  jobTitle: "Frontend Engineer & UI Designer",
-  company: "Unicorns & Co.",
+  email: "m3rashid.hussain@gmail.com",
+  website: "https://m3rashid.in",
+  jobTitle: "Full Stack Developer",
+  // company: "Unicorns & Co.",
   availableForWork: true,
-  location: {
-    city: "Los Angeles",
-    media: "/losangeles.jpg",
-  },
+  location: "New Delhi",
 };
 
 const defaultTitle = `${defaultAuthor.name}'s Blog`;
@@ -30,17 +27,8 @@ const siteMetadata: SiteMetaData = {
     template: `%s | ${defaultTitle}`,
     default: defaultTitle,
   },
+	defaultTheme: 'system',
   description: defaultDescription,
-  siteRepo: "https://github.com/thedevdavid/digital-garden",
-  newsletterProvider: "mailerlite",
-  newsletterUrl: "https://developreneur.davidlevai.com",
-  analyticsProvider: "umami",
-  defaultTheme: "system",
-  activeAnnouncement: true,
-  announcement: {
-    buttonText: "Support on DevHunt →",
-    link: "https://devhunt.org/tool/modern-developer-blog-template-digital-garden-starter",
-  },
   postsPerPage: 10,
   postsOnHomePage: 8,
   projectsOnHomePage: 4,

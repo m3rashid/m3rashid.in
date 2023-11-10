@@ -5,7 +5,6 @@ import { Inter, Space_Grotesk } from "next/font/google";
 
 import siteMetadata, { BASE_URL, defaultAuthor } from "@/lib/metadata";
 import { Toaster } from "@/components/ui/toaster";
-import { Analytics } from "@/components/analytics";
 import { BackTopButton } from "@/components/back-to-top";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -44,7 +43,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster />
         </ThemeProvider>
       </body>
-      <Analytics />
     </html>
   );
 }
