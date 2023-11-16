@@ -15,9 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function TagsPage() {
-  const posts = allPosts.filter((post) => post.status === "published");
+  const blogs = allPosts.filter((blog) => blog.status === "published");
 
-  const tags = getTagsWithCount(posts);
+  const tags = getTagsWithCount(blogs);
 
   if (!tags || Object.keys(tags).length === 0) {
     notFound();

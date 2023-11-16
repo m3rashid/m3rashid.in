@@ -19,8 +19,8 @@ export async function GET(request: Request) {
     .map((post) => {
       feed.item({
         title: post.title,
-        guid: `${BASE_URL}/posts/${post.slug}`,
-        url: `${BASE_URL}/posts/${post.slug}`,
+        guid: `${BASE_URL}/blogs/${post.slug}`,
+        url: `${BASE_URL}/blogs/${post.slug}`,
         date: post.lastUpdatedDate as string,
         description: post.description || "",
         author: defaultAuthor.name,

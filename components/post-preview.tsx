@@ -14,7 +14,7 @@ const PostPreview = ({ post }: PostPreviewProps) => {
   return (
     <article className="w-full">
       <Link
-        href={`/posts/${post.slug}`}
+        href={`/blogs/${post.slug}`}
         className={cn(
           "select-rounded-md block w-full rounded-md p-4 leading-none no-underline outline-none transition-colors hover:bg-foreground/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         )}

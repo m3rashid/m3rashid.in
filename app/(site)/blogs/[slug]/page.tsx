@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PostSeries, SeriesItem } from "@/types";
+import { BlogSeries, SeriesItem } from "@/types";
 import { allPosts } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import { Home } from "lucide-react";
@@ -42,7 +42,7 @@ async function getPostFromParams(params: PostProps["params"]): Promise<any> {
         };
       });
     if (seriesPosts.length > 0) {
-      return { ...post, series: { ...post.series, posts: seriesPosts } as PostSeries };
+      return { ...post, series: { ...post.series, blogs: seriesPosts } as BlogSeries };
     }
   }
 
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: PostProps): Promise<Metadata>
 
 export async function generateStaticParams(): Promise<PostProps["params"][]> {
   return allPosts.map((post) => ({
-    slug: `/posts/${post._raw.flattenedPath}`,
+    slug: `/blogs/${post._raw.flattenedPath}`,
   }));
 }
 
@@ -106,7 +106,7 @@ export default async function PostPage({ params }: PostProps) {
           </li>
 
           <li>
-            <Link href="/posts" className="block transition hover:text-muted-foreground/70">
+            <Link href="/blogs" className="block transition hover:text-muted-foreground/70">
               Blog
             </Link>
           </li>

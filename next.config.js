@@ -4,14 +4,14 @@ const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  rewrites: async () => [
-    {
-      source: "/posts/test",
-      destination: "/posts/get-started",
-    },
-  ],
+	reactStrictMode: true,
+	swcMinify: true,
+	rewrites: async () => [
+		{
+			source: "/blogs/test",
+			destination: "/blogs/get-started",
+		},
+	],
 };
 
 module.exports = withContentlayer(nextConfig);

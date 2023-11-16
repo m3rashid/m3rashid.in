@@ -5,14 +5,14 @@ import { defaultAuthor } from "@/lib/metadata";
 const content: ContentNavItem[] = [
   {
     title: "Blog",
-    href: "/posts",
-    description: "Blog posts. Mostly about web development. Or chicken fingers",
+    href: "/blogs",
+    description: "Blog blogs. Mostly about web development. Or chicken fingers",
   },
-	{
-		title: "Videos",
-		href: defaultAuthor.socialProfiles.find((platform) => platform.name === "youtube")?.link as string,
-		description: "My YouTube channel where I talk about web development.",
-	},
+  {
+    title: "Videos",
+    href: defaultAuthor.socialProfiles.find((platform) => platform.name === "youtube")?.link as string,
+    description: "My YouTube channel where I talk about web development.",
+  },
 ];
 
 export const navigationLinks: NavItem[] = [
@@ -23,7 +23,16 @@ export const navigationLinks: NavItem[] = [
   {
     title: "Projects",
     href: "/projects",
-  },{
+  },
+  {
+    title: "Works",
+    href: "/works",
+  },
+  {
+    title: "Experience",
+    href: "/experience",
+  },
+  {
     title: "Now",
     href: "/now",
   },

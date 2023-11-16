@@ -1,14 +1,14 @@
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { allPages, allPosts } from "contentlayer/generated";
+import { ArrowRight } from "lucide-react";
 
-import { Mdx } from "@/components/mdx";
-import { sortByDate } from "@/lib/utils";
-import PostPreview from "@/components/post-preview";
-import { Sidebar } from "@/components/home-sidebar";
-import { HeroSimple } from "@/components/hero-simple";
 import siteMetadata, { defaultAuthor } from "@/lib/metadata";
+import { sortByDate } from "@/lib/utils";
+import { HeroSimple } from "@/components/hero-simple";
+import { Sidebar } from "@/components/home-sidebar";
+import { Mdx } from "@/components/mdx";
+import PostPreview from "@/components/post-preview";
 
 async function getAboutPage() {
   const aboutPage = allPages.find((page) => page.slug === "about");
@@ -22,7 +22,7 @@ async function getAboutPage() {
 
 export default async function Home() {
   const aboutPage = await getAboutPage();
-  const posts = allPosts
+  const blogs = allPosts
     .filter((post) => post.status === "published")
     .sort(sortByDate)
     .slice(0, siteMetadata.postsOnHomePage);
@@ -33,7 +33,7 @@ export default async function Home() {
         title="Building cool digital products around the world 🌴"
         subtitle="I'm Amy. Frontend engineer writing code and blog on the internet."
       />
-    
+
       {aboutPage && (
         <div className="container max-w-6xl">
           <div className="grid grid-cols-1 place-items-start justify-between gap-12 lg:grid-cols-3">
@@ -45,7 +45,7 @@ export default async function Home() {
                 height={498}
                 className="h-auto w-72 -rotate-1 hover:rotate-3"
               />
-              <div className="text-center mt-1">
+              <div className="mt-1 text-center">
                 <h1 className="font-heading text-2xl font-bold">{defaultAuthor.name}</h1>
                 <p className="text-muted-foreground">{defaultAuthor.jobTitle}</p>
                 <p className="text-muted-foreground">{defaultAuthor.company}</p>
@@ -60,19 +60,19 @@ export default async function Home() {
         </div>
       )}
 
-			<div className="container mt-12 max-w-6xl">
+      <div className="container mt-12 max-w-6xl">
         <div className="grid grid-cols-1 place-items-start justify-between gap-12 lg:grid-cols-3">
           <div className="col-span-1 w-full lg:col-span-2">
             <div className="grid grid-flow-row gap-2">
-              {posts.map((post) => (
+              {blogs.map((post) => (
                 <PostPreview key={post._id} post={post} />
               ))}
             </div>
             <Link
-              href="/posts"
+              href="/blogs"
               className="mt-10 flex items-center py-2 text-sm text-accent-foreground underline-offset-4 hover:text-muted-foreground hover:underline"
             >
-              See all posts <ArrowRight className="ml-2 h-4 w-4" />
+              See all blogs <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
           <aside className="w-full">

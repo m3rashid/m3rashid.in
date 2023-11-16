@@ -1,8 +1,6 @@
 import { LinkProps } from "next/link";
 import { Post, Series } from "contentlayer/generated";
 
-import { AnnouncementBarProps } from "@/components/announcement-bar";
-
 export interface PostHeading {
   heading: number;
   text: string;
@@ -45,9 +43,9 @@ export type SeriesItem = {
   isCurrent: boolean;
 };
 
-export type PostSeries = Series & { posts: SeriesItem[] };
+export type BlogSeries = Series & { blogs: SeriesItem[] };
 
-export type PostWithSeries = Omit<Post, "series"> & { series: PostSeries };
+export type BlogWithSeries = Omit<Post, "series"> & { series: BlogSeries };
 
 export type SocialProfile = {
   name: string;

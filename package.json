@@ -8,8 +8,7 @@
     "start": "next start",
     "preview": "next build && next start",
     "lint": "next lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md,mdx,js,jsx,json,mjs}\"",
-    "prepare": "husky install"
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx,js,jsx,json,mjs}\""
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.1",

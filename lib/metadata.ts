@@ -19,7 +19,7 @@ export const defaultAuthor: AuthorType = {
   location: "New Delhi",
 };
 
-const defaultTitle = `${defaultAuthor.name}'s Blog`;
+const defaultTitle = defaultAuthor.name;
 const defaultDescription = `I'm ${defaultAuthor.name}. Building hackin’ cool digital products around the world 🌴.`;
 
 const siteMetadata: SiteMetaData = {

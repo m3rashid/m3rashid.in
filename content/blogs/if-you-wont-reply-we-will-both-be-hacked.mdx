@@ -1,0 +1,88 @@
+---
+title: Hey babe! If you won't reply, we will both be hacked !!
+publishedDate: 2023-06-11
+lastUpdatedDate: 2023-06-11
+tags:
+  - signal
+  - whatsapp
+  - e2ee
+description: Discussion about whatsapp end to end encryption and signal protocol
+status: published
+---
+
+It's frustrating or rather disappointing when you are the only one in the conversation and the other person seems not quite interested in whatever you speak. Ya, I get that. Happens to all of us. This not only is an emotional concern but at the same time, a security concern. We are both going out of the path, let's discuss. Shall we?
+
+Instant messaging apps are awesome. Two parties communicate on platforms seamlessly in real-time without any hassle ensuring security. One of the crucial parts of these applications is the end-to-end encryption they provide, or rather claim to. This is one of the fascinating things in computer science and how this all works. The key points to ensure revolves around
+
+- Maintaining maximum security, with end-to-end encryption
+- Maintaining low latency, as the systems need to be real-time
+- Scaling your service to millions of users
+
+Let's handle it one by one
+
+## End-To-End Encryption
+
+Data encryption is the process of using an algorithm that transforms standard text characters into an unreadable format. To explain, this process uses encryption keys to scramble data so that only authorized users can read it. End-to-end encryption uses this same process, too. However, it takes it a step further by securing communications from one endpoint to another.
+
+In many messaging services, third parties store the data, which is encrypted only in transit. This server-side encryption method secures the data from unauthorized viewers only. But as an effect of this method, the sender can view the information, too, which can be undesirable in cases where data privacy at all points is needed.
+
+In the case of end-to-end encryption, encrypted data is only viewable by those with decryption keys. In other words, E2EE prevents unintended users, including third parties, from reading or modifying data when only the intended readers should have this access and ability. E2EE is used especially when privacy is of the utmost concern.
+
+End-to-end encryption begins with cryptography, a method for protecting information by transforming it into an unreadable format called ciphertext. Only users who possess a secret key can decipher, or decrypt, the message into plaintext. With E2EE, the sender or creator encrypts the data, and only the intended receiver or reader can decrypt it.
+
+Asymmetric, or public-key cryptography, encrypts and decrypts the data using two separate cryptographic keys. The public key is used to encrypt a message and send it to the public key's owner. Then, the message can only be decrypted using a corresponding private key, also known as a decryption key. For example, the Transport Layer Security (TLS) encryption protocol keeps third parties from intercepting messages in transit. Although this in-transit encryption is different from E2EE, but it is a good starting point.
+
+In an in-transit encryption, the client and the server agree to a cryptographic public-private pair and exchange public keys with each other. The client now cryptographically signs its message with the server's public key and sends it to the server. The server decrypts it with its private key and forwards it to the database to store this plain text message. Now, it signs the same message with the other client's public key and sends it to the intended recipient client. The recipient client decrypts using its own private key and the process continues.
+
+The same method discussed above is used in the case of TLS (Transport Level Security). It ensures, you get the data in plain text but keeps it hidden from attackers in transit, thus minimizing man-in-the-middle attacks. But this is in no way close to E2EE. In this method, the server and the database keep the records (messages) in plain text and thus can be read by any of the users in that organization's domain. E2EE ensures that not only your data is secure in transit, but at the same time cannot be read by anyone else other than the intended recipient. This uses some advanced hashing algorithms we will be discussing later in this article.
+
+## Low latency
+
+The systems implementing this algorithm must ensure low latency as without it, the whole point of a real-time secure messaging service becomes flawed. So, it is very crucial from a business standpoint as well as an engineering standpoint, the service be as low as possible in latency.
+
+Scaling it to millions of users
+We cannot just throw a bunch of buzzwords and expect the "flawless architecture" to work out. It has to stand the test of time, the spikes and trenches in user growth, content creation, etc. This has to be distributed while at the same time, catering to our encryption and scalability needs.
+
+## The Signal Protocol
+
+This algorithm is the heart of WhatsApp, Signal, and other E2EE-enabled instant messaging platforms. The Signal Protocol (formerly known as the TextSecure Protocol) is a non-federated cryptographic protocol that can be used to provide end-to-end encryption for voice calls and instant messaging conversations. It uses public key cryptography and diffie hellman keys/algorithm for each of the messages you send or receive.
+
+For simplicity let's assume the parties are Mitsuha and Taki (characters taken from one of my favorite anime).
+
+Both Taki and Mitsuha generate their public-private key pair and exchange their public keys with each other and combined them to create a shared-secret key like a Diffie-Hellman key exchange. Mitsuha combines her private key with Taki's public key and Taki combines his private key with Mitsuha's public key. Both of them now end up with the same shared-secret key which can be used to encrypt and decrypt messages.
+
+This process is a one-time thing. But a long text message may involve multiple messages over a period of time. There can be long breaks between the messages, doing this once may give an attacker enough time to break into the system and read and potentially modify the messages in transit. It would be better to have unique keys for each of the messages and for that, you need a machine to create unique keys each time. You can produce the first key from the procedure described above and then the machine produces the keys from there on and on. Each key should be different from the previous key so that the attacker having one key does not have access to keys (messages) after it. This process is termed "Forward Secrecy" - which means even if a part of the system was compromised later in the future, it has no effects on earlier parts (data in the system).
+
+This machine is called the key-derivation function. It inputs a big number (key) and outputs another big number (key) unique and totally different from the input key. These functions are simply mathematical functions involving multiplication and factoring, like a ratchet that moves one way only.
+
+But, there is a catch. If the attacker happens to know any one key and the key derivation function, they can derive future keys. So, the protocol uses another ratchet that changes the machine each time it creates a new key. Thus giving the name to this algorithm as "The Double Ratchet Algorithm". The other ratchet changes the seed number (key) inside of the first ratchet so that the new key generated now has no relation to the earlier/input keys.
+
+Now, Taki and Mitsuha need to change the machine's inscribed secret number (key) frequently so that anyone who gets to know one key may not be able to generate future keys. But, in this case of instant messaging, both of them are operating on their identical machines independently and now the problem goes back to "How will these machines communicate now?". How would they now agree upon a new number?
+
+Both Taki and Mitsuha play ping-pong with numbers and repeatedly do Diffie-Helman calculations with those numbers. Diffie Helman creates a shared secret key combining one's private key with the other's public key, which both give the same shared-secret key. This shared-secret key is a number that will be inscribed on both machines.
+
+## Whole Process in Action
+
+1. Taki retrieves Mitsuha's public key and combines it with his own private key through Diffie Helman to get a shared-secret key which is inscribed on his machine. Then he uses this machine to get a key.
+2. He encrypts the message with that key and sends it over to Mitsuha, and he also sends over his own public key.
+3. Mitsuha mixes her private key with Taki's public key through Diffie Helman to get that same shared-secret key which will be the same number as Taki's. She inscribes this key on her machine and gets the same key as Taki, which can be used to decrypt the message that he sends.
+4. Now Mitsuha wants to reply. She generates a new Public-Private key pair and does the calculations: mixes her own private key with Taki's public key -> inscribed this shared key on the machine -> gets a new key -> encrypts the message with this key -> attaches her own public key with the message -> send over to Taki.
+5. This process goes over and over again like this.
+6. Now, Mitsuha is angry and does not want to reply to this conversation anymore. The to-and-fro movement of numbers now stops because her public key never changes. If Taki sends 20 messages in a row, the machine's inscribed number (shared-secret key) remains unchanged the whole time.
+7. This enables the potential attackers to calculate the new keys and then read messages from now on.
+8. The whole system is secured back again when Mitsuha replies which changes the machine's inscribed number. This process is called "Post Compromised Security" or "Break and recovery". Even if the system is compromised, it can regain security.
+
+There is also an interesting approach, which works by implementing two machines at each end of the conversation which we call for simplicity Send and Receive Machines. Taki's send machine is Mitsuha's receive machine and vice versa. Taki's send machine and Mitsuha's receive machine produce the keys for Taki to encrypt and Mitsuha to decrypt messages.
+
+Besides increasing security, the two machines help sort out which messages arrive out of order. We can number the messages since the last time the machine changes its inscribed number and it can also tell the total number of messages sent while the machine had the previous inscribed number. Now the order of the messages is both important for maintaining a sensible conversation as well as cryptography. Maybe Taki decrypts the messages in a different order than Mitsuha is encrypting them, which is obviously painful.
+
+Now, you know you know the importance of conversation to be bi-directional. Not only for human relationships to work but for your own security over the internet
+
+Until next time, Peace out :)
+
+## References
+1. https://github.com/signalapp/libsignal
+2. https://www.signal.org/docs/
+3. https://en.wikipedia.org/wiki/Signal_Protocol
+4. https://signal.org/blog/whatsapp-complete/
+5. https://eprint.iacr.org/2016/1013.pdf

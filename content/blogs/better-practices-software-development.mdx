@@ -1,0 +1,117 @@
+---
+title: Better Practices with React and Software Development in General
+publishedDate: 2023-04-30
+lastUpdatedDate: 2023-04-30
+tags:
+  - signal
+  - whatsapp
+  - e2ee
+description: browser, window dimensions etc.
+status: published
+---
+
+React is a library for building user interfaces. It does not enforce developers to write in a certain manner or follow any specific pattern. It is not opinionated in any way about the things you should or not do with React.
+
+This is good as well as bad at the same time. Developers over time, have created their own unique ways of achieving certain functionalities and sometimes in ways that degrade performance or make the code seriously complex.
+
+Here, I share some of the things that I learned in my journey and the pitfalls that I fell into so that you don't do the same mistake. These may differ depending on your use case. Most of the things are related to projects that aim to turn into a product at the end. You are absolutely free for anything during learning :-
+
+## Maintainability
+
+In the programming world, there is a saying (other than Don't Repeat Yourself), "Your entire codebase should be pragmatic enough so that new developers can be onboarded easily and at the same time, should look like, it is written by a single developer". This means, for any of your serious projects, which you plan as a startup or work on for longer periods of time, you should be serious about certain things like git workflow, code formatting, linting, CI/CD, testing, etc. Although React does not enforce any standards, you should and this is a somewhat serious issue with React. You have to figure it all out by yourself. Things like Data flow, dependency management, state management, access control, network and API access layers, caching, telemetry, assigning authority, etc ...
+
+In the end, it is you who is going to maintain this codebase and you should be considerate about it from the beginning itself.
+
+## Unnecessary Dependencies
+
+Every package that you use adds yet another dependency to your project. Dependencies, by their very name, are things you need in order for your code to function. The more dependencies you take on, the more points of failure you have. Not to mention the more chance for error: have you vetted any of the programmers who have written these functions that you depend on daily?
+
+Please, for the sake of the Almighty, don't overload your codebases with unnecessary dependencies. If you are not able to write a function to generate left padding on strings or convert snake/pascal/camel case to sentence case (to show it better to the end-user), you need to question your programming skills. You should really be worried about AI taking over your job. You need to learn those first and you absolutely don't need any dependencies for those trivial tasks.
+
+I don't suggest you write everything all by yourself, that would take the product forever to launch. Be a dependency minimal person. Before adding any dependency to your project, ask a question to yourself, if you can do this by yourself. Do you actually need these many dependencies for something so trivial?
+
+Some of the things actually require us to rely on third-party packages like ORMs for databases, Caching solutions, Component libraries, etc. It would be a nightmare making these on your own. And these things are actually very optimized for things in their domain.
+
+## Making it more pragmatic and intuitive
+
+I believe one of the reasons why recoil was very easily picked up by react developers to manage the global states is because of its pragmatic nature. It has atomic nature in global state management.
+
+```tsx
+import { atom, useRecoilState } from "recoil"
+
+// declaring the atom
+const textAtom = atom<string>({
+	key: 'textState', // unique ID
+	default: '', // initial
+});
+
+const SomeComponent: React.FC<{}> = (props) => {
+const [text, setText] = useRecoilState(textAtom)
+	...
+}
+```
+
+Just look at the elegant syntax, it feels so natural and pragmatic to react builtin useState hook. The point is, your style of writing code should be in a way that is natural to the framework/library so that other developers find it intuitive to catch up quickly. Consider the snippet below
+
+```tsx
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useState } from "react";
+
+export type Auth = { isLoggedIn: boolean; user: IUser | null };
+export const authDefaultState: Auth = { isLoggedIn: false, user: null };
+
+export const authContext = createContext<[auth: Auth, setAuth: Dispatch<SetStateAction<Auth>>]>([
+  authDefaultState,
+  () => {},
+]);
+
+export const AuthContextProvider = ({ children }: PropsWithChildren) => {
+  const [auth, setAuth] = useState(authDefaultState);
+  return <authContext.Provider value={[auth, setAuth]}>{children}</authContext.Provider>;
+};
+```
+
+This snippet creates an auth context in React to implement the logged-in state of the user inside the application. This is a pretty normal case, but notice how the data values are passed down from the context `value={[auth, setAuth]}` . This is a very small refactor, but the result it brings is pragmatic and more readable React code. Consider the snippet below
+
+```tsx
+import { useContext } from "react"
+import { authContext, authDefaultState } from 'context/auth'
+
+const SomeComponent: React.FC<{}> = (props) => {
+const [auth, setAuth] = useContext(authContext)
+	...
+}
+```
+
+This lets us use context the same way we use a normal useState inside of our react applications.
+
+This is just the beginning of refactoring your codebase. Multiple pathways can be followed and the possibilities are endless. Let's go to our next topic now
+
+## State Management
+
+You surely need to use a global state management solution. But should you? If you only store the values coming from certain APIs as data in your global states, you don't exactly need global state management. What you need is a caching layer for your APIs. And for those needs where you actually want to store data, context is there to the rescue.
+
+Taking an example from an admin dashboard. It needs to get data frequently, which would make the child components re-render and ask for data again, you probably need caching here in place rather than a global data store. Now, consider the famous tool "Figma". To make something like that in React, you definitely need a good atomic state management library like recoil, zustand, or jotai, or some signal-based library like `@preact/signals-react`.
+
+## Network and APIs and Caching
+
+I have briefly touched upon the need for caching network requests. There are libraries like react-query that sit in between your application and outbound network requests as a data layer. It lets each component call for API requests and it decides whether to actually make the external call or return values from its data store. There are more tools like react-query . Checkout swr by Vercel team.
+
+This approach makes your components more autonomous and reduces coupling between components in your application. This makes your components better for tests as they are more loosely connected with other elements and you don't need to prop drill your API response data deep inside the DOM tree
+
+## Access Control
+
+Any sensible app you want to make certainly needs authentication and authorization. This is the bare minimum requirement. But the thing that makes you stand out is how you manage your users in your application. You want it to model more of the real world in terms of how things function.
+
+I am a student in CSE, FET - JMI. I have permission to attend my classes, receive and submit assignments, etc. I also hold a position in GDSC, which gets me even more permissions. Your system should model role-based access control, modeling real-world data.
+
+In my app, a potential solution for this scenario would be making a role named student and giving all student permissions to it. Then make all permissions for that society and assign permissions. These two roles can now be associated with my account. This needs to be implemented carefully both on the UI/UX side as well as on the backend.
+
+## Who did this?
+
+Your app should be able to trace back the users who did a certain action. Just to have accountability over other users. Any action that creates or modifies data that has any kind of effect on other users must contain the details of the user that made that specific change. This is more of a backend work rather than a frontend work.
+
+## Telemetry
+
+The whole point you are creating your app is to make money out of it. If this is what drives you, you must decide on how and what telemetry data you should collect from the app to improve user retention, attention, etc.
+
+Thanks for reading. I will keep on updating this article in the future just to keep up with the latest and better practices.

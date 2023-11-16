@@ -11,8 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}/tags/${tag}`,
     lastModified: now,
   }));
-  const posts = loadedPosts.map((post) => ({
-    url: `${BASE_URL}/posts/${post.slug}`,
+  const blogs = loadedPosts.map((post) => ({
+    url: `${BASE_URL}/blogs/${post.slug}`,
     lastModified: post.lastUpdatedDate || post.publishedDate,
   }));
   const pages = allPages
@@ -40,10 +40,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...pages,
     {
-      url: `${BASE_URL}/posts`,
+      url: `${BASE_URL}/blogs`,
       lastModified: now,
     },
-    ...posts,
+    ...blogs,
     {
       url: `${BASE_URL}/tags`,
       lastModified: now,

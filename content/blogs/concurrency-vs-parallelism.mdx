@@ -1,0 +1,36 @@
+---
+title: Concurrency vs Parallelism
+publishedDate: 2023-04-30
+lastUpdatedDate: 2023-04-30
+tags:
+  - signal
+  - whatsapp
+  - e2ee
+description: 
+status: published
+---
+
+Let's imagine you have two tasks to do, Cleaning up your room and cooking food. You now have three ways/approaches to complete this task. These are discussed below
+
+## Serial Execution
+In the previous example, if you had to do it serially, you will first complete all of cooking the food, or cleaning (one of the two), and then start to work on the other once the first one is done. In this process, at any given point in time, you are doing a single thing, and that too all at once.
+
+## Concurrent Execution
+Now you divide your time in terms of availability. For X amount of time, you prepare the food and then set it to cook. Meanwhile, you can continue with your other task of cleaning the room. During this time, you time and again check for if the food is prepared or not. This way, you are minimizing the time a single task takes and using your time effectively. This is a concurrent execution. You are not in any way, idle waiting for a task to complete (if there are tasks at hand). This is what happens inside a computer in a single thread. At any point in time, you are doing a single work but carefully giving time to other tasks.
+
+<img src="/execution.avif" alt="Serial Execution" />
+<figcaption>Concurrent Execution of tasks A (A1, A2, A3) and B (B1, B2, B3)</figcaption>
+
+## Parallel Execution
+In the previous example, if you had to do it parallelly, you will need a second copy of yourself because you have to do all the tasks at once. This means, at any point in time, you will need to be doing both the work and independent of each other.
+
+<img src="/parallel.avif" alt="Parallel Execution" />
+<figcaption>Parallel Execution of tasks A (A1, A2, A3) and B (B1, B2, B3)</figcaption>
+
+Now that you understand these terms, why does a processor thread in a CPU works concurrently? This is to avoid any blocking of resources. Let's say you are printing a document, you will click on the print button and it starts printing. Under the hood, your computer sends the request to your printer and it stores the content inside its buffer for use. When the buffer gets emptied up, it asks the computer again. Now, the time till the printer finishes printing, the computer doesn't need to sit idle, not doing any work but also not available for any task, because it is waiting for the printing to be completed. This is bad as this resource could be used to cater to other important tasks. In fact, the computer works both concurrently and parallelly in the sense that each thread works concurrently and a computer has multiple cores and threads.
+
+In the context of NodeJs, javascript is a single-threaded language. But nodeJs is still a good choice for applications. This is because of its non-blocking nature. A single nodeJs process works in a single thread and there are no questions of achieving any form of parallelism in this case. But, there is a catch. And of course, you can spawn up multiple nodeJs processes and make use of all of the system resources. This way, you would technically multiply your capacity to handle requests by the number of cores your system has (it is the upper limit). But for the time being, let's not go into that. We assume, our system is single core only and deals with how nodeJs works with it.
+
+NodeJs runs processes concurrently, in a non-blocking manner thanks to its event loop. This means that nodeJs normally runs in a sequential manner and as soon as it encounters any asynchronous task (like network requests, file operations, etc ...), it delegates that to the host operating system to handle. This maintains a bunch of micro-task queues that store these asynchronous tasks. Once the tasks get completed, it continues from where they left off. In the meantime, nodeJs does not wait for it to be completed, rather it handles other requests that might pop in. All of this hassle is just to make the tasks span over multiple CPU ticks and not let other processes stall in the meantime.
+
+Thanks for reading, please share your opinions on other languages and which model you like the most.
