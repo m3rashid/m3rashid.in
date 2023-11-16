@@ -43,6 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/blogs`,
       lastModified: now,
     },
+    {
+      url: `${BASE_URL}/paper-shelf`,
+      lastModified: now,
+    },
     ...blogs,
     {
       url: `${BASE_URL}/tags`,

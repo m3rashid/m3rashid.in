@@ -13,6 +13,11 @@ const content: ContentNavItem[] = [
     href: defaultAuthor.socialProfiles.find((platform) => platform.name === "youtube")?.link as string,
     description: "My YouTube channel where I talk about web development.",
   },
+  {
+    title: "Paper shelf",
+    href: "/paper-shelf",
+    description: "A collection of papers I've read and found interesting.",
+  },
 ];
 
 export const navigationLinks: NavItem[] = [

@@ -3,24 +3,26 @@ title: Environment Variables in React
 publishedDate: 2023-04-30
 lastUpdatedDate: 2023-04-30
 tags:
-  - signal
-  - whatsapp
-  - e2ee
+  - react
+  - env
 description: This article talks about storing secrets in your react project
 status: published
+series:
+  order: 1
+  title: React
 ---
 
 It is a very common and encouraged practice, not to store any API key or secret in your react apps. This is quite a nice suggestion because you want your API keys to be secure and un-exposed.
 
 This is even suggested by the CRA team and I quote:
 
-> Your project can consume variables declared in your environment as if they were declared locally in your JS files. By default, you will have NODE_ENV defined for you, and any other environment variables starting with REACT_APP_.
+> Your project can consume variables declared in your environment as if they were declared locally in your JS files. By default, you will have NODE*ENV defined for you, and any other environment variables starting with REACT_APP*.
 >
 > WARNING: Do not store any secrets (such as private API keys) in your React app!
 >
 > Environment variables are embedded into the build, meaning anyone can view them by inspecting your app's files.
 >
->The environment variables are embedded during the build time. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, as described here. Alternatively, you can rebuild the app on the server anytime you change them.
+> The environment variables are embedded during the build time. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, as described here. Alternatively, you can rebuild the app on the server anytime you change them.
 
 In the end, you compile your code into an optimized build and at this moment, react embeds those API keys from your .env files to the written code. This is dangerous as it will be sent to the user’s browsers and you can expect all sorts of nasty things going on here.
 

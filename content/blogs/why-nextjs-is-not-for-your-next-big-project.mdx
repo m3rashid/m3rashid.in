@@ -8,35 +8,41 @@ tags:
   - javascript
 description: You better put efforts on prior discussion before sticking to a certain opinionated frameworks
 status: published
+series:
+  order: 2
+  title: React
 ---
 
-1. Taking a lot of memory under the hood (*)
-	- We were on for micro-frontends and the case with Next.Js is just bizarre. Even with the new SWC support, Next.Js build time limits developer productivity and limits us in our endeavors
-	- We were running a single base core and three micro-frontend applications inside it with plugins for Next.Js. The memory just shot up till the point the machine does not respond. It was a huge disaster working with it.
-	- The worst thing is that the same code logic, message passing, and inter-micro-frontend communication was seamless with the core react (Vite/SWC + Typescript )
-	- Finally, we had to rewrite all our efforts in the past six months to migrate to the new (Core React) part.
+1. Taking a lot of memory under the hood (\*)
+
+   - We were on for micro-frontends and the case with Next.Js is just bizarre. Even with the new SWC support, Next.Js build time limits developer productivity and limits us in our endeavors
+   - We were running a single base core and three micro-frontend applications inside it with plugins for Next.Js. The memory just shot up till the point the machine does not respond. It was a huge disaster working with it.
+   - The worst thing is that the same code logic, message passing, and inter-micro-frontend communication was seamless with the core react (Vite/SWC + Typescript )
+   - Finally, we had to rewrite all our efforts in the past six months to migrate to the new (Core React) part.
 
 2. Compiling time sucks even with the new SWC
-	- As explained earlier too, the load times were very high even with all the optimizations we could think of. This may be our specific use cases, but this is a problem and I cannot vouch for Next.Js anymore now.
+
+   - As explained earlier too, the load times were very high even with all the optimizations we could think of. This may be our specific use cases, but this is a problem and I cannot vouch for Next.Js anymore now.
 
 3. API routes cannot be used in Next.Js Page level functions like getServersideProps or getStaticProps
-	- Let's suppose you create an API endpoint under /api/hello.ts . You cannot use it in page-level functions like getServersideProps or getStaticProps .
-	- I know, it may be the case that the /api routes are not compiled till the point you get to work with it, especially at build times, but if you vouch for it being a full-stack framework, it must be the bare minimum.
-	- There are certain hacks with it, like using functions in place of API routes in those page-level functions.
+
+   - Let's suppose you create an API endpoint under /api/hello.ts . You cannot use it in page-level functions like getServersideProps or getStaticProps .
+   - I know, it may be the case that the /api routes are not compiled till the point you get to work with it, especially at build times, but if you vouch for it being a full-stack framework, it must be the bare minimum.
+   - There are certain hacks with it, like using functions in place of API routes in those page-level functions.
 
 4. it is not a full-stack framework
-	- Next.Js is very good when it comes to SEO, filesystem-based routing etc and these are the juicy parts. These are not the first priority when it comes to mission-critical apps. Next.Js is very good when it comes to small toy projects but I don't count on it.
-	- Surely, it does some things really well but at the same time, becomes a pain in the ass managing stuff.
-	- Full stack does not come with just making API routes and functions. It has a plethora of other use cases which Next.Js barely touches.
-	- Things like
-		- Monitoring
-		- Logging
-		- Background tasks
-		- Request queues
-		- Server-Sent Events
-		- Web Sockets
-		- Async Processing
-		- Message broker within apps
-		- Inter-services communication
+   - Next.Js is very good when it comes to SEO, filesystem-based routing etc and these are the juicy parts. These are not the first priority when it comes to mission-critical apps. Next.Js is very good when it comes to small toy projects but I don't count on it.
+   - Surely, it does some things really well but at the same time, becomes a pain in the ass managing stuff.
+   - Full stack does not come with just making API routes and functions. It has a plethora of other use cases which Next.Js barely touches.
+   - Things like
+     - Monitoring
+     - Logging
+     - Background tasks
+     - Request queues
+     - Server-Sent Events
+     - Web Sockets
+     - Async Processing
+     - Message broker within apps
+     - Inter-services communication
 
 These things are not available with Next.Js. Almost every time when I chose Next.Js for my projects, I had to make a separate dedicated server for the API and not rely on Next.Js' way to build APIs. This brings a lot of frustration and overwork on the developer side. I think this is more of a serverless architecture problem, rather than Next.Js Problem. But I wrote this in context of Next.Js because if you are not a full-stack framework, you better not advertise it so.
